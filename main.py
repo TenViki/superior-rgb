@@ -1,4 +1,5 @@
 import importlib
+import json
 from os import system
 import time
 from lib.animations import get_animations
@@ -8,10 +9,6 @@ from lib.logitech import Logitech
 from lib.tray import setuptray
 from threading import Thread
 
-aura = Aura("http://127.0.0.1:27339")
-leds = Leds(29, "COM5")
-logitech = Logitech()
-
 animationThread = None
 
 animation = {
@@ -20,6 +17,25 @@ animation = {
     "module": None
 }
 animationEnded = False
+
+config = None
+
+def loadConfig():
+    global config
+    config = json.loads(open("config.json").read())
+
+def updateConfig(config):
+    with open("config.json", "w", encoding="utf-8") as f:
+        json.dump(config, f, indent=" ")
+
+loadConfig()
+
+# Load all the SDKS
+print("Loading SDKs")
+aura = Aura("http://127.0.0.1:27339")
+leds = Leds(config["stripLeds"], config["port"], config["baudrate"])
+logitech = Logitech()
+print("SDKs loaded")
 
 def set_animation(_, animationstr):
     global animationEnded
@@ -42,6 +58,9 @@ def set_animation(_, animationstr):
     animationThread = Thread(target=animate, daemon=False)
     animationEnded = False
     animationThread.start()
+
+    config["animation"] = animation["name"]
+    updateConfig(config)
 
 def animate():
     global animation

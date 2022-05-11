@@ -1,5 +1,6 @@
 {
-  "port": "COM5",
-  "baudrate": 115200,
-  "stripLeds": 29
+ "port": "COM5",
+ "baudrate": 115200,
+ "stripLeds": 29,
+ "animation": "flash"
 }

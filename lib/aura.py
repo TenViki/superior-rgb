@@ -31,7 +31,6 @@ class Aura:
             }
             data.append(obj)
         
-        print(data)
         result = requests.put(self.url + "/AuraSDK/AuraDevice/", json={"data": data})
         
 
