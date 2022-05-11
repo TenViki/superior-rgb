@@ -1,4 +1,4 @@
-MAX_T = 256
+max_t = 256
 
-def PROCESS(t):
-    return [t, 0, 0]
+def process(t):
+    return [20, t, 0, 0]
