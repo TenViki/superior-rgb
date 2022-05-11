@@ -1,4 +1,5 @@
 import requests
+import time
 
 class Aura:
     def __init__(self, url):
@@ -13,6 +14,7 @@ class Aura:
         try:
             result = requests.get(self.url + "/AuraSDK/AuraDevice")
             if(result.json()["result"] != '0'):
+                time.sleep(1)
                 raise Exception("AuraSDK/AuraDevice: " + result.json()["result"])
             return result.json()
         except:
