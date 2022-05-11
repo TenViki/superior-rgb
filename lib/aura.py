@@ -5,15 +5,15 @@ class Aura:
         self.url = url
         self.initApi()
         self.devices = self.getDevices()
-        print(self.devices)
     
     def initApi(self):
-        result = requests.post(self.url + "/AuraSDK", json={"category": "SDK"})
-        print(result.json())
+        requests.post(self.url + "/AuraSDK", json={"category": "SDK"})
 
     def getDevices(self):
         try:
             result = requests.get(self.url + "/AuraSDK/AuraDevice")
+            if(result.json()["result"] != '0'):
+                raise Exception("AuraSDK/AuraDevice: " + result.json()["result"])
             return result.json()
         except:
             return self.getDevices()
@@ -31,7 +31,6 @@ class Aura:
         
         print(data)
         result = requests.put(self.url + "/AuraSDK/AuraDevice/", json={"data": data})
-        print(result.json())
         
 
 # convert r g b to 65280 like format

@@ -1,4 +1,4 @@
-max_t = 256
+max_t = 255
 
 def process(t):
-    return [20, t, 0, 0]
+    return [0, t, 0, 0]

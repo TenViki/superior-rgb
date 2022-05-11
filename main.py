@@ -54,7 +54,7 @@ def animate():
         for t in range(max_t + 1):
             delay, r, g, b = module.process(t)
             print(delay, r, g, b)
-            set_color(r, g, b)
+            set_color(min(r, 255), min(g, 255), min(255, b))
             time.sleep(delay / 1000)
             if animationEnded:
                 return
@@ -65,13 +65,15 @@ def animate():
 def quit():
     global animationEnded
     print("Quitting")
-    animationEnded = True
-    exit(0)
+    if animationThread is not None:
+        animationEnded = True
+        animationThread.join()
+
 
 def set_color(r, g, b):
+    logitech.setColor(r, g, b)
     aura.setColor(r, g, b)
     leds.setAllLeds(r, g, b)
-    logitech.setColor(r, g, b)
 
 def main():
     # tray_thread = Thread(target=setuptray, args=(get_animations(), set_animation, quit), daemon=False)
