@@ -25,14 +25,13 @@ def setuptray(animations, set_animation, quit_func):
     animationMenu = QMenu("Animations")
 
     for animation in animations:
-        print("Adding animation:", animation)
+        if not animation.endswith(".py"): 
+            continue
         animationAction = animationMenu.addAction(animation)
 
         receiver = lambda bVal, anim=animation: set_animation(bVal, anim)
 
         animationAction.triggered.connect(receiver)
-
-    animationMenu.addAction("animationAction")
 
     menu.addMenu(animationMenu)
 

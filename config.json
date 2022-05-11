@@ -2,5 +2,5 @@
  "port": "COM5",
  "baudrate": 115200,
  "stripLeds": 29,
- "animation": "rgb"
+ "animation": "breathing"
 }
