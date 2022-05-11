@@ -1,16 +1,17 @@
 import serial
 
+
 class Leds:
 
-    def __init__(self, numleds, port):
-        self.com = serial.Serial(port, 115200)
-        self.buffer = bytearray(6 + numleds * 3);
+    def __init__(self, numleds, port, boudrate=115200):
+        self.com = serial.Serial(port, boudrate)
+        self.buffer = bytearray(6 + numleds * 3)
         self.colors = []
         self.numleds = numleds
 
         self.resetLeds()
 
-    def defineLED(self, led, r, g, b, update = True):
+    def defineLED(self, led, r, g, b, update=True):
         self.colors[led] = [r, g, b]
         if update:
             self.controlLED(self.colors)
@@ -18,7 +19,7 @@ class Leds:
     def shiftColors(self, r, g, b):
         self.colors.pop(len(self.colors) - 1)
         self.colors.insert(0, [r, g, b])
-    
+
     def resetLeds(self):
         self.colors = []
         for i in range(self.numleds):
@@ -31,7 +32,7 @@ class Leds:
         self.colors = []
         for i in range(self.numleds):
             self.colors.append([r, g, b])
-            
+
         self.controlLED(self.colors)
 
     def controlLED(self, arr):
@@ -42,7 +43,7 @@ class Leds:
         self.buffer[4] = (self.numleds - 1) & 0xff
         self.buffer[5] = self.buffer[3] ^ self.buffer[4] ^ 0x55
 
-        num = 0;
+        num = 0
 
         for i in range(6, 6 + self.numleds * 3, 3):
 
@@ -53,5 +54,3 @@ class Leds:
             num += 1
 
         self.com.write(self.buffer)
-    
-    
