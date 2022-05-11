@@ -72,7 +72,6 @@ def animate():
     while True:
         for t in range(max_t + 1):
             delay, r, g, b = module.process(t)
-            print(delay, r, g, b)
             set_color(min(r, 255), min(g, 255), min(255, b))
             time.sleep(delay / 1000)
             if animationEnded:
@@ -95,10 +94,8 @@ def set_color(r, g, b):
     leds.setAllLeds(r, g, b)
 
 def main():
-    # tray_thread = Thread(target=setuptray, args=(get_animations(), set_animation, quit), daemon=False)
-    # tray_thread.start()
-
-    print("Oh oy")
+    if(config["animation"] is not None):
+        set_animation(None, config["animation"])
 
     setuptray(get_animations(), set_animation, quit)
 
