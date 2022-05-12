@@ -13,6 +13,7 @@ class Aura:
     def getDevices(self):
         try:
             result = requests.get(self.url + "/AuraSDK/AuraDevice")
+            print("Devices: ", result.json())
             if(result.json()["result"] != '0'):
                 time.sleep(1)
                 raise Exception("AuraSDK/AuraDevice: " + result.json()["result"])

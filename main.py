@@ -30,6 +30,9 @@ def updateConfig(config):
 
 loadConfig()
 
+print("Waiting 2 minutes to give all the services time to start")
+time.sleep(120)
+
 # Load all the SDKS
 print("Loading SDKs")
 aura = Aura("http://127.0.0.1:27339")
